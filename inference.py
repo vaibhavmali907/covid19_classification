@@ -39,4 +39,3 @@ def predict(df):
     predictions = model.predict(numpy_array)
     output = [class_names[class_predicted] for class_predicted in predictions]
     return output
-
