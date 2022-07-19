@@ -107,10 +107,14 @@ y = dataset['COVID-19']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
 
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 
-sc = MinMaxScaler(feature_range=(0,1))
-X_scaled = sc.fit_transform(X)
+sc = StandardScaler()
+
+X_train = sc.fit_transform(X_train)
+
+X_test =  sc.transform(X_test)
+
 
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
