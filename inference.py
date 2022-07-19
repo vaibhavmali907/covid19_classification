@@ -1,4 +1,5 @@
 import pickle
+import pandas as pd
 
 
 model = pickle.load(open('covid_dataset.pkl','rb'))
@@ -21,9 +22,7 @@ class_names = [0, 1]  # int values
 
 
 def predict(df):
-    df = df[['Breathing Problem','Fever','Dry Cough','Sore throat','Hyper Tension','Fatigue ','Abroad travel',
-             'Contact with COVID Patient','Attended Large Gathering','Visited Public Exposed Places',
-             'Family working in Public Exposed Places']]
+    df = df[['Breathing Problem','Fever','Dry Cough','Sore throat','Hyper Tension','Fatigue ','Abroad travel','Contact with COVID Patient','Attended Large Gathering','Visited Public Exposed Places','Family working in Public Exposed Places']]
     df['Breathing Problem'] = Breathing_Problem_encoder.transform(df['Breathing Problem'])
     df['Fever'] = Fever_encoder.transform(df['Fever'])
     df['Dry Cough'] = Dry_Cough_encoder.transform(df['Dry Cough'])
@@ -35,8 +34,9 @@ def predict(df):
     df['Attended Large Gathering'] = Attended_Large_Gathering_encoder.transform(df['Attended Large Gathering'])
     df['Visited Public Exposed Places'] = Visited_Public_Exposed_Places_encoder.transform(df['Visited Public Exposed Places'])
     df['Family working in Public Exposed Places'] = Family_working_in_Public_Exposed_Places_encoder.transform(df['Family working in Public Exposed Places'])
-    df = scaler.transform(df)
-    predictions = model.predict(df)
+    df = pd.DataFrame(scaler.transform(df))
+    numpy_array = df.to_numpy()
+    predictions = model.predict(numpy_array)
     output = [class_names[class_predicted] for class_predicted in predictions]
     return output
 
