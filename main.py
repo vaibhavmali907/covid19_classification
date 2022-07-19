@@ -29,16 +29,15 @@ print(dataset[dataset['COVID-19'] == 'No'].count())
 
 dataset.isnull().sum()
 
-dataset=dataset.drop('Running Nose',axis=1)
-dataset=dataset.drop('Chronic Lung Disease',axis=1)
-dataset=dataset.drop('Headache',axis=1)
-dataset=dataset.drop('Heart Disease',axis=1)
-dataset=dataset.drop('Diabetes',axis=1)
-dataset=dataset.drop('Gastrointestinal ',axis=1)
-dataset=dataset.drop('Wearing Masks',axis=1)
-dataset=dataset.drop('Sanitization from Market',axis=1)
-dataset=dataset.drop('Asthma',axis=1)
-
+dataset = dataset.drop('Running Nose',axis=1)
+dataset = dataset.drop('Chronic Lung Disease',axis=1)
+dataset = dataset.drop('Headache',axis=1)
+dataset = dataset.drop('Heart Disease',axis=1)
+dataset = dataset.drop('Diabetes',axis=1)
+dataset = dataset.drop('Gastrointestinal ',axis=1)
+dataset = dataset.drop('Wearing Masks',axis=1)
+dataset = dataset.drop('Sanitization from Market',axis=1)
+dataset = dataset.drop('Asthma',axis=1)
 
 #Encoding
 from sklearn.preprocessing import LabelEncoder
@@ -91,12 +90,9 @@ COVID_19_encoder=LabelEncoder()
 dataset['COVID-19'] = COVID_19_encoder.fit_transform(dataset['COVID-19'])
 pickle.dump(COVID_19_encoder, open('COVID_19_encoder.pkl','wb'))
 
-
 dataset.head()
 
 dataset.info()
-
-dataset.head()
 
 print(dataset[dataset['COVID-19'] == 1].count())
 
@@ -111,9 +107,9 @@ y = dataset['COVID-19']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
 
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 
-sc = StandardScaler()
+sc = MinMaxScaler(feature_range=(0,1))
 X_scaled = sc.fit_transform(X)
 
 from sklearn.svm import SVC
@@ -138,4 +134,3 @@ df = pd.read_csv(r'test.csv')
 output = predict(df)
 
 print(output)
-
